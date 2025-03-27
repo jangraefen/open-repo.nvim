@@ -1,0 +1,46 @@
+==============================================================================
+------------------------------------------------------------------------------
+                                                             *OpenRepo.toggle()*
+                              `OpenRepo.toggle`()
+Toggle the plugin by calling the `enable`/`disable` methods respectively.
+
+------------------------------------------------------------------------------
+                                                             *OpenRepo.enable()*
+                           `OpenRepo.enable`({scope})
+Initializes the plugin, sets event listeners and internal state.
+
+------------------------------------------------------------------------------
+                                                            *OpenRepo.disable()*
+                              `OpenRepo.disable`()
+Disables the plugin, clear highlight groups and autocmds, closes side buffers and resets the internal state.
+
+
+==============================================================================
+------------------------------------------------------------------------------
+                                                              *OpenRepo.options*
+                               `OpenRepo.options`
+OpenRepo configuration with its default values.
+
+Type ~
+`(table)`
+Default values:
+>lua
+  OpenRepo.options = {
+      -- Prints useful logs about what event are triggered, and reasons actions are executed.
+      debug = false,
+  }
+
+<
+------------------------------------------------------------------------------
+                                                              *OpenRepo.setup()*
+                          `OpenRepo.setup`({options})
+Define your open-repo setup.
+
+Parameters ~
+{options} `(table)` Module config table. See |OpenRepo.options|.
+
+Usage ~
+`require("open-repo").setup()` (add `{}` with your |OpenRepo.options| table)
+
+
+ vim:tw=78:ts=8:noet:ft=help:norl:

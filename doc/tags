@@ -1,0 +1,5 @@
+OpenRepo.disable()	open-repo.txt	/*OpenRepo.disable()*
+OpenRepo.enable()	open-repo.txt	/*OpenRepo.enable()*
+OpenRepo.options	open-repo.txt	/*OpenRepo.options*
+OpenRepo.setup()	open-repo.txt	/*OpenRepo.setup()*
+OpenRepo.toggle()	open-repo.txt	/*OpenRepo.toggle()*
