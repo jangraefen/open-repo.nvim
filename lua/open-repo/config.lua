@@ -51,7 +51,7 @@ function OpenRepo.defaults(options)
 
         for host, platform in pairs(OpenRepo.options.host_mappings) do
             assert(type(host) == "string", "Domain name must be a string")
-            assert(platform == "github" or platform == "gitlab", string.format("Platform for host '%s' must be either 'github' or 'gitlab'", domain))
+            assert(platform == "github" or platform == "gitlab", string.format("Platform for host '%s' must be either 'github' or 'gitlab'", host))
         end
     end
 

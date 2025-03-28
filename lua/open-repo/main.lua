@@ -4,10 +4,65 @@ local state = require("open-repo.state")
 -- internal methods
 local main = {}
 
+-- Toggle the plugin by calling the `enable`/`disable` methods respectively.
+--
+---@param scope string: internal identifier for logging purposes.
+---@private
+function main.toggle(scope)
+    if state.get_enabled(state) then
+        log.debug(scope, "open-repo is now disabled!")
+
+        return main.disable(scope)
+    end
+
+    log.debug(scope, "open-repo is now enabled!")
+
+    main.enable(scope)
+end
+
+--- Initializes the plugin, sets event listeners and internal state.
+---
+--- @param scope string: internal identifier for logging purposes.
+---@private
+function main.enable(scope)
+    if state.get_enabled(state) then
+        log.debug(scope, "open-repo is already enabled")
+
+        return
+    end
+
+    state.set_enabled(state)
+
+    -- saves the state globally to `_G.OpenRepo.state`
+    state.save(state)
+end
+
+--- Disables the plugin for the given tab, clear highlight groups and autocmds, closes side buffers and resets the internal state.
+---
+--- @param scope string: internal identifier for logging purposes.
+---@private
+function main.disable(scope)
+    if not state.get_enabled(state) then
+        log.debug(scope, "open-repo is already disabled")
+
+        return
+    end
+
+    state.set_disabled(state)
+
+    -- saves the state globally to `_G.OpenRepo.state`
+    state.save(state)
+end
+
+---@class RepoInfo
+---@field domain string The domain of the git host (e.g., "github.com")
+---@field owner string The repository owner or organization name
+---@field name string The repository name
+
 -- Extracts the repository URL from the current buffer.
 --
 ---@param scope string: internal identifier for logging purposes.
----@return table|nil # Repository info containing domain, owner, and name, or nil if not found
+---@return RepoInfo|nil # Repository information or nil if not found
 ---@private
 function main.get_repo_url(scope)
     -- Get the directory to check
@@ -62,54 +117,87 @@ function main.get_repo_url(scope)
     return repo_info
 end
 
--- Toggle the plugin by calling the `enable`/`disable` methods respectively.
+---@class RepoUrls
+---@field repo string The main repository URL
+---@field change_requests string The URL for pull/merge requests
+---@field cicd string The URL for CI/CD (GitHub Actions or GitLab Pipelines)
+
+-- Constructs various repository-related URLs based on the host
 --
----@param scope string: internal identifier for logging purposes.
+---@param scope string internal identifier for logging purposes
+---@return RepoUrls|nil # Repository URLs or nil if host not supported
 ---@private
-function main.toggle(scope)
-    if state.get_enabled(state) then
-        log.debug(scope, "open-repo is now disabled!")
-
-        return main.disable(scope)
+function main.construct_repo_urls(scope)
+    local repo_info = main.get_repo_url(scope)
+    if not repo_info then
+        log.error(scope, "No repository information provided")
+        return nil
     end
 
-    log.debug(scope, "open-repo is now enabled!")
+    local config = _G.OpenRepo.config
+    local service_type = config.host_mappings[repo_info.domain]
 
-    main.enable(scope)
+    if not service_type then
+        log.error(scope, string.format("No service type mapping found for host: %s", repo_info.domain))
+        return nil
+    end
+
+    local base = string.format("https://%s/%s/%s", repo_info.domain, repo_info.owner, repo_info.name)
+    local urls = {}
+
+    if service_type == "github" then
+        log.debug(scope, "Constructed GitHub URLs")
+        urls = {
+            repo = base,
+            change_requests = base .. "/pulls",
+            cicd = base .. "/actions"
+        }
+    elseif service_type == "gitlab" then
+        log.debug(scope, "Constructed GitLab URLs")
+        urls = {
+            repo = base,
+            change_requests = base .. "/-/merge_requests",
+            cicd = base .. "/-/pipelines"
+        }
+    else
+        log.error(scope, string.format("Unsupported service type: %s", service_type))
+        return nil
+    end
+
+    return urls
 end
 
---- Initializes the plugin, sets event listeners and internal state.
----
---- @param scope string: internal identifier for logging purposes.
----@private
-function main.enable(scope)
-    if state.get_enabled(state) then
-        log.debug(scope, "open-repo is already enabled")
+---@alias UrlType "repo"|"change_requests"|"cicd"
 
-        return
+-- Opens the specified URL type in the configured browser
+--
+---@param scope string internal identifier for logging purposes
+---@param url_type UrlType which URL type to open
+---@return boolean success whether the URL was opened successfully
+---@private
+function main.open_url(scope, url_type)
+    local urls = main.construct_repo_urls(scope)
+    if not urls then
+        return false
     end
 
-    state.set_enabled(state)
-
-    -- saves the state globally to `_G.OpenRepo.state`
-    state.save(state)
-end
-
---- Disables the plugin for the given tab, clear highlight groups and autocmds, closes side buffers and resets the internal state.
----
---- @param scope string: internal identifier for logging purposes.
----@private
-function main.disable(scope)
-    if not state.get_enabled(state) then
-        log.debug(scope, "open-repo is already disabled")
-
-        return
+    local url = urls[url_type]
+    if not url then
+        log.error(scope, string.format("Invalid URL type: %s", url_type))
+        return false
     end
 
-    state.set_disabled(state)
+    local config = _G.OpenRepo.config
+    local cmd = string.format('%s "%s"', config.browser_command, url)
+    
+    vim.fn.system(cmd)
+    if vim.v.shell_error ~= 0 then
+        log.error(scope, string.format("Failed to open URL: %s", url))
+        return false
+    end
 
-    -- saves the state globally to `_G.OpenRepo.state`
-    state.save(state)
+    log.debug(scope, string.format("Opened %s URL: %s", url_type, url))
+    return true
 end
 
 return main

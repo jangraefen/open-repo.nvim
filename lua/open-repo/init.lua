@@ -3,14 +3,6 @@ local config = require("open-repo.config")
 
 local OpenRepo = {}
 
-function OpenRepo.get_repo_info()
-    if _G.OpenRepo.config == nil then
-        _G.OpenRepo.config = config.options
-    end
-
-    return main.get_repo_url("public_api_get_repo_info")
-end
-
 --- Toggle the plugin by calling the `enable`/`disable` methods respectively.
 function OpenRepo.toggle()
     if _G.OpenRepo.config == nil then
@@ -37,6 +29,21 @@ end
 -- setup OpenRepo options and merge them with user provided ones.
 function OpenRepo.setup(opts)
     _G.OpenRepo.config = config.setup(opts)
+end
+
+-- Opens the main repository URL in the configured browser
+function OpenRepo.open_repo()
+    main.open_url("public_api_open_repo", "repo")
+end
+
+-- Opens the change requests URL in the configured browser
+function OpenRepo.open_change_requests()
+    main.open_url("public_api_open_change_requests", "change_requests")
+end
+
+-- Opens the CI/CD URL in the configured browser
+function OpenRepo.open_cicd()
+    main.open_url("public_api_open_cicd", "cicd")
 end
 
 _G.OpenRepo = OpenRepo
