@@ -3,130 +3,55 @@
 </p>
 
 <p align="center">
-    > A catch phrase that describes your plugin.
+    Bridging the gap between your code editor and your code collaboration platform.
 </p>
-
-<div align="center">
-    > Drag your video (<10MB) here to host it for free on GitHub.
-</div>
-
-<div align="center">
-
-> Videos don't work on GitHub mobile, so a GIF alternative can help users.
-
-_[GIF version of the showcase video for mobile users](SHOWCASE_GIF_LINK)_
-
-</div>
 
 ## ⚡️ Features
 
-> Write short sentences describing your plugin features
+While coding, I found myself often in the situation that I quickly wanted to check on the pipeline. Or once I pushed
+final commit for a feature, I wanted to open the PR. This plugin is meant to help you with that.
 
-- FEATURE 1
-- FEATURE ..
-- FEATURE N
+Instead of trying to poorly simulate the platform UI in NeoVim, this plugin just makes switching between both worlds a
+bit easier and faster.
+
+- `:OpenRepo`: Open the start page of the current repository.
+- `:OpenRepoCR`: Open the change request for the current repository (Pull requests for GitHub, Merge Requests for GitLab).
+- `:OpenRepoCICD`: Open the CICD for the current repository (Actions for GitHub, Pipelines for GitLab).
+
+The current repository is determined by the currently active buffer or the current working directory. 
 
 ## 📋 Installation
 
-<div align="center">
-<table>
-<thead>
-<tr>
-<th>Package manager</th>
-<th>Snippet</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-[wbthomason/packer.nvim](https://github.com/wbthomason/packer.nvim)
-
-</td>
-<td>
+Using [folke/lazy.nvim](https://github.com/folke/lazy.nvim) is recommended, but any plugin manager should work.
 
 ```lua
--- stable version
-use {"open-repo.nvim", tag = "*" }
--- dev version
-use {"open-repo.nvim"}
+{
+  'jangraefen/open-repo.nvim',
+  -- If you want to trigger lazy loading on commands
+  cmd = {
+    'OpenRepo',
+    'OpenRepoCR',
+    'OpenRepoCICD'
+  },
+  -- Some inspriration for keybinds
+  keys = {
+    { '<leader>gr', '<cmd>OpenRepo<CR>', desc = 'Open repository' },
+    { '<leader>gc', '<cmd>OpenRepoCR<CR>', desc = 'Open change request' },
+    { '<leader>gb', '<cmd>OpenRepoCICD<CR>', desc = 'Open builds' }
+  },
+  -- No setup is needed, but you can configure custom GitHub and GitLab mappings or customize the browser command.
+  setup = function()
+    require('open-repo').setup({
+      browser_command = 'xdg-open',
+      host_mappings = {
+          ["gitlab.mycompany.com"] = "gitlab",
+      },
+    })
+  end,
+}
+
 ```
-
-</td>
-</tr>
-<tr>
-<td>
-
-[junegunn/vim-plug](https://github.com/junegunn/vim-plug)
-
-</td>
-<td>
-
-```lua
--- stable version
-Plug "open-repo.nvim", { "tag": "*" }
--- dev version
-Plug "open-repo.nvim"
-```
-
-</td>
-</tr>
-<tr>
-<td>
-
-[folke/lazy.nvim](https://github.com/folke/lazy.nvim)
-
-</td>
-<td>
-
-```lua
--- stable version
-require("lazy").setup({{"open-repo.nvim", version = "*"}})
--- dev version
-require("lazy").setup({"open-repo.nvim"})
-```
-
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-
-## ☄ Getting started
-
-> Describe how to use the plugin the simplest way
-
-## ⚙ Configuration
-
-> The configuration list sometimes become cumbersome, making it folded by default reduce the noise of the README file.
-
-<details>
-<summary>Click to unfold the full list of options with their default values</summary>
-
-> **Note**: The options are also available in Neovim by calling `:h open-repo.options`
-
-```lua
-require("open-repo").setup({
-    -- you can copy the full list from lua/open-repo/config.lua
-})
-```
-
-</details>
-
-## 🧰 Commands
-
-|   Command   |         Description        |
-|-------------|----------------------------|
-|  `:Toggle`  |     Enables the plugin.    |
 
 ## ⌨ Contributing
 
 PRs and issues are always welcome. Make sure to provide as much context as possible when opening one.
-
-## 🗞 Wiki
-
-You can find guides and showcase of the plugin on [the Wiki](https://github.com/jangraefen/open-repo.nvim/wiki)
-
-## 🎭 Motivations
-
-> If alternatives of your plugin exist, you can provide some pros/cons of using yours over the others.

@@ -18,7 +18,7 @@ For GitLab: Opens https://gitlab.com/owner/repo
     ]],
 })
 
-vim.api.nvim_create_user_command("OpenChangeRequests", function()
+vim.api.nvim_create_user_command("OpenRepoCR", function()
     require("open-repo").open_change_requests()
 end, {
     desc = "Open the change requests URL in the configured browser",
@@ -31,7 +31,7 @@ For GitLab: Opens the Merge Requests page (https://gitlab.com/owner/repo/-/merge
     ]],
 })
 
-vim.api.nvim_create_user_command("OpenCicd", function()
+vim.api.nvim_create_user_command("OpenCICD", function()
     require("open-repo").open_cicd()
 end, {
     desc = "Open the CI/CD URL in the configured browser",
