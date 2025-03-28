@@ -3,6 +3,14 @@ local config = require("open-repo.config")
 
 local OpenRepo = {}
 
+function OpenRepo.get_repo_info()
+    if _G.OpenRepo.config == nil then
+        _G.OpenRepo.config = config.options
+    end
+
+    return main.get_repo_url("public_api_get_repo_info")
+end
+
 --- Toggle the plugin by calling the `enable`/`disable` methods respectively.
 function OpenRepo.toggle()
     if _G.OpenRepo.config == nil then
