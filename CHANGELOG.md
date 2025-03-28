@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.0.0 (2025-03-28)
+
+
+### Features
+
+* add first version of repo extractor ([6d59333](https://github.com/jangraefen/open-repo.nvim/commit/6d5933317895fd2120ce6720532aef5697b0986c))
+* add first version of repo extractor ([4bb55e0](https://github.com/jangraefen/open-repo.nvim/commit/4bb55e0230ca9e9a31c29208ebb7466d6878032a))
+
 ## [3.0.0](https://github.com/shortcuts/neovim-plugin-boilerplate/compare/v2.2.0...v3.0.0) (2024-09-25)
 
 
