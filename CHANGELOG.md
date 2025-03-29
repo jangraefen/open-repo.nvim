@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.2](https://github.com/jangraefen/open-repo.nvim/compare/v1.0.1...v1.0.2) (2025-03-29)
+
+
+### Bug Fixes
+
+* setup routine should also init the config ([b53089b](https://github.com/jangraefen/open-repo.nvim/commit/b53089b90310122e61b22dac40e211f42afa807e))
+
 ## [1.0.1](https://github.com/jangraefen/open-repo.nvim/compare/v1.0.0...v1.0.1) (2025-03-29)
 
 
