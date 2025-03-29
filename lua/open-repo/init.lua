@@ -13,6 +13,11 @@ function OpenRepo.open_repo()
   main.open_url('public_api_open_repo', 'repo')
 end
 
+-- Opens the active file URL in the configured browser
+function OpenRepo.open_file()
+  main.open_url('public_api_open_file', 'file')
+end
+
 -- Opens the change requests URL in the configured browser
 function OpenRepo.open_change_requests()
   main.open_url('public_api_open_change_requests', 'change_requests')

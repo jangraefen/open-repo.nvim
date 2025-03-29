@@ -3,11 +3,16 @@ local log = require 'open-repo.util.log'
 -- internal methods
 local main = {}
 
+---@class FileInfo
+---@field name string The file name
+---@field line number The line number
 
 ---@class RepoInfo
 ---@field domain string The domain of the git host (e.g., "github.com")
 ---@field owner string The repository owner or organization name
 ---@field name string The repository name
+---@field branch string The branch name
+---@field file FileInfo|nil The location within the active file, if available
 
 -- Extracts the repository URL from the current buffer.
 --
@@ -18,10 +23,16 @@ function main.get_repo_url(scope)
   -- Get the directory to check
   local current_file = vim.fn.expand '%:p'
   local dir_to_check
+  local file_info
 
   if current_file and current_file ~= '' then
     dir_to_check = vim.fn.fnamemodify(current_file, ':h')
     log.debug(scope, 'Using file directory: ' .. dir_to_check)
+
+    file_info = {
+      name = vim.fn.expand '%:t',
+      line = vim.fn.line 'v',
+    }
   else
     dir_to_check = vim.fn.getcwd()
     log.debug(scope, 'Using working directory: ' .. dir_to_check)
@@ -30,6 +41,7 @@ function main.get_repo_url(scope)
   -- Change to the directory and get git remote URL
   local cmd = string.format('cd "%s" && git remote get-url origin', dir_to_check)
   local remote_url = vim.fn.system(cmd):gsub('[\n\r]', '')
+  local branch = vim.fn.system(cmd .. ' | grep -oP "refs/heads/\\K[^ ]+"'):gsub('[\n\r]', '')
 
   if vim.v.shell_error ~= 0 then
     log.error(scope, 'Failed to get git remote URL')
@@ -61,6 +73,8 @@ function main.get_repo_url(scope)
     domain = domain,
     owner = owner,
     name = name,
+    branch = branch,
+    file = file_info,
   }
 
   log.debug(scope, string.format('Found repository: %s/%s on %s', owner, name, domain))
@@ -71,6 +85,7 @@ end
 ---@field repo string The main repository URL
 ---@field change_requests string The URL for pull/merge requests
 ---@field cicd string The URL for CI/CD (GitHub Actions or GitLab Pipelines)
+---@field file string The URL for the active file
 
 -- Constructs various repository-related URLs based on the host
 --
@@ -102,6 +117,9 @@ function main.construct_repo_urls(scope)
       change_requests = base .. '/pulls',
       cicd = base .. '/actions',
     }
+    if repo_info.file then
+      urls.file = base .. '/blob/' .. repo_info.branch .. '/' .. repo_info.file.name .. '#L' .. repo_info.file.line
+    end
   elseif service_type == 'gitlab' then
     log.debug(scope, 'Constructed GitLab URLs')
     urls = {
@@ -109,6 +127,9 @@ function main.construct_repo_urls(scope)
       change_requests = base .. '/-/merge_requests',
       cicd = base .. '/-/pipelines',
     }
+    if repo_info.file then
+      urls.file = base .. '/-/blob/' .. repo_info.branch .. '/' .. repo_info.file.name .. '#L' .. repo_info.file.line
+    end
   else
     log.error(scope, string.format('Unsupported service type: %s', service_type))
     return nil
@@ -117,7 +138,7 @@ function main.construct_repo_urls(scope)
   return urls
 end
 
----@alias UrlType "repo"|"change_requests"|"cicd"
+---@alias UrlType "repo"|"change_requests"|"cicd"|"file"
 
 -- Opens the specified URL type in the configured browser asynchronously
 --

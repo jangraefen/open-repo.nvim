@@ -25,3 +25,10 @@ end, {
   desc = 'Open the CI/CD URL in the configured browser',
   nargs = 0,
 })
+
+vim.api.nvim_create_user_command('OpenRepoFile', function()
+  require('open-repo').open_file()
+end, {
+  desc = 'Open the active file URL in the configured browser',
+  nargs = 0,
+})
