@@ -26,9 +26,7 @@ T["setup()"]["sets exposed methods and default options value"] = function()
     Helpers.expect.global_type(child, "_G.OpenRepo", "table")
 
     -- public methods
-    Helpers.expect.global_type(child, "_G.OpenRepo.toggle", "function")
-    Helpers.expect.global_type(child, "_G.OpenRepo.disable", "function")
-    Helpers.expect.global_type(child, "_G.OpenRepo.enable", "function")
+    Helpers.expect.global_type(child, "_G.OpenRepo.setup", "function")
 
     -- config
     Helpers.expect.global_type(child, "_G.OpenRepo.config", "table")
@@ -36,17 +34,47 @@ T["setup()"]["sets exposed methods and default options value"] = function()
     -- assert the value, and the type
     Helpers.expect.config(child, "debug", false)
     Helpers.expect.config_type(child, "debug", "boolean")
+    Helpers.expect.config(child, "browser_command", "xdg-open")
+    Helpers.expect.config_type(child, "browser_command", "string")
+    Helpers.expect.config(child, "host_mappings", {
+        ["github.com"] = "github",
+        ["gitlab.com"] = "gitlab",
+    })
+    Helpers.expect.config_type(child, "host_mappings", "table")
 end
 
 T["setup()"]["overrides default values"] = function()
     child.lua([[require('open-repo').setup({
         -- write all the options with a value different than the default ones
         debug = true,
+        browser_command = "firefox",
+        host_mappings = {
+            ["github.company.com"] = "github",
+        },
     })]])
 
     -- assert the value, and the type
     Helpers.expect.config(child, "debug", true)
     Helpers.expect.config_type(child, "debug", "boolean")
+    Helpers.expect.config(child, "browser_command", "firefox")
+    Helpers.expect.config_type(child, "browser_command", "string")
+    Helpers.expect.config(child, "host_mappings", {
+        ["github.com"] = "github",
+        ["gitlab.com"] = "gitlab",
+        ["github.company.com"] = "github",
+    })
+    Helpers.expect.config_type(child, "host_mappings", "table")
 end
+
+-- T["setup()"]["can open a browser"] = function()
+--     child.lua([[
+--     local open_repo = require('open-repo')
+--     open_repo.setup({
+--         debug = true,
+--     })
+--
+--     open_repo.open_repo()
+--     ]])
+-- end
 
 return T
