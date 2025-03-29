@@ -40,6 +40,7 @@ Using [folke/lazy.nvim](https://github.com/folke/lazy.nvim) is recommended, but 
     { '<leader>gb', '<cmd>OpenRepoCICD<CR>', desc = 'Open builds' }
   },
   opts = {
+    -- If you are on WSL, you can install wslu and use wslview as the command
     browser_command = 'xdg-open',
     host_mappings = {
       ["gitlab.mycompany.com"] = "gitlab",
