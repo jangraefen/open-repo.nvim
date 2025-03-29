@@ -169,11 +169,11 @@ end
 
 ---@alias UrlType "repo"|"change_requests"|"cicd"
 
--- Opens the specified URL type in the configured browser
+-- Opens the specified URL type in the configured browser asynchronously
 --
 ---@param scope string internal identifier for logging purposes
 ---@param url_type UrlType which URL type to open
----@return boolean success whether the URL was opened successfully
+---@return boolean success whether the URL opening was initiated successfully
 ---@private
 function main.open_url(scope, url_type)
   local urls = main.construct_repo_urls(scope)
@@ -183,20 +183,28 @@ function main.open_url(scope, url_type)
 
   local url = urls[url_type]
   if not url then
-    log.error(scope, string.format('Invalid URL type: %s', url_type))
+    log.error(scope, string.format("Invalid URL type: %s", url_type))
     return false
   end
 
   local config = _G.OpenRepo.config
-  local cmd = string.format('%s "%s"', config.browser_command, url)
+  local cmd = { config.browser_command, url }
 
-  vim.fn.system(cmd)
-  if vim.v.shell_error ~= 0 then
-    log.error(scope, string.format('Failed to open URL: %s', url))
+  local job_id = vim.fn.jobstart(cmd, {
+    on_exit = function(_, exit_code)
+      if exit_code ~= 0 then
+        log.error(scope, string.format("Failed to open URL: %s (exit code: %d)", url, exit_code))
+      else
+        log.debug(scope, string.format("Opened %s URL: %s", url_type, url))
+      end
+    end
+  })
+
+  if job_id <= 0 then
+    log.error(scope, string.format("Failed to start browser command for URL: %s", url))
     return false
   end
 
-  log.debug(scope, string.format('Opened %s URL: %s', url_type, url))
   return true
 end
 
