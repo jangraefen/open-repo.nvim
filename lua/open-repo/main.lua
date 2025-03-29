@@ -66,11 +66,11 @@ end
 ---@private
 function main.get_repo_url(scope)
     -- Get the directory to check
-    local current_file = vim.fn.expand('%:p')
+    local current_file = vim.fn.expand("%:p")
     local dir_to_check
-    
-    if current_file and current_file ~= '' then
-        dir_to_check = vim.fn.fnamemodify(current_file, ':h')
+
+    if current_file and current_file ~= "" then
+        dir_to_check = vim.fn.fnamemodify(current_file, ":h")
         log.debug(scope, "Using file directory: " .. dir_to_check)
     else
         dir_to_check = vim.fn.getcwd()
@@ -80,7 +80,7 @@ function main.get_repo_url(scope)
     -- Change to the directory and get git remote URL
     local cmd = string.format('cd "%s" && git remote get-url origin', dir_to_check)
     local remote_url = vim.fn.system(cmd):gsub("[\n\r]", "")
-    
+
     if vim.v.shell_error ~= 0 then
         log.error(scope, "Failed to get git remote URL")
         return nil
@@ -88,7 +88,7 @@ function main.get_repo_url(scope)
 
     -- Parse the remote URL into components
     local domain, owner, name
-    
+
     if remote_url:match("^git@") then
         -- SSH format: git@github.com:owner/repo.git
         domain, owner, name = remote_url:match("^git@([^:]+):([^/]+)/(.+)$")
@@ -110,7 +110,7 @@ function main.get_repo_url(scope)
     local repo_info = {
         domain = domain,
         owner = owner,
-        name = name
+        name = name,
     }
 
     log.debug(scope, string.format("Found repository: %s/%s on %s", owner, name, domain))
@@ -138,11 +138,15 @@ function main.construct_repo_urls(scope)
     local service_type = config.host_mappings[repo_info.domain]
 
     if not service_type then
-        log.error(scope, string.format("No service type mapping found for host: %s", repo_info.domain))
+        log.error(
+            scope,
+            string.format("No service type mapping found for host: %s", repo_info.domain)
+        )
         return nil
     end
 
-    local base = string.format("https://%s/%s/%s", repo_info.domain, repo_info.owner, repo_info.name)
+    local base =
+        string.format("https://%s/%s/%s", repo_info.domain, repo_info.owner, repo_info.name)
     local urls = {}
 
     if service_type == "github" then
@@ -150,14 +154,14 @@ function main.construct_repo_urls(scope)
         urls = {
             repo = base,
             change_requests = base .. "/pulls",
-            cicd = base .. "/actions"
+            cicd = base .. "/actions",
         }
     elseif service_type == "gitlab" then
         log.debug(scope, "Constructed GitLab URLs")
         urls = {
             repo = base,
             change_requests = base .. "/-/merge_requests",
-            cicd = base .. "/-/pipelines"
+            cicd = base .. "/-/pipelines",
         }
     else
         log.error(scope, string.format("Unsupported service type: %s", service_type))
@@ -189,7 +193,7 @@ function main.open_url(scope, url_type)
 
     local config = _G.OpenRepo.config
     local cmd = string.format('%s "%s"', config.browser_command, url)
-    
+
     vim.fn.system(cmd)
     if vim.v.shell_error ~= 0 then
         log.error(scope, string.format("Failed to open URL: %s", url))

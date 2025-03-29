@@ -33,16 +33,19 @@ end
 
 -- Opens the main repository URL in the configured browser
 function OpenRepo.open_repo()
+    OpenRepo.enable()
     main.open_url("public_api_open_repo", "repo")
 end
 
 -- Opens the change requests URL in the configured browser
 function OpenRepo.open_change_requests()
+    OpenRepo.enable()
     main.open_url("public_api_open_change_requests", "change_requests")
 end
 
 -- Opens the CI/CD URL in the configured browser
 function OpenRepo.open_cicd()
+    OpenRepo.enable()
     main.open_url("public_api_open_cicd", "cicd")
 end
 
