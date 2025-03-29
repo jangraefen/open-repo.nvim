@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.1](https://github.com/jangraefen/open-repo.nvim/compare/v1.1.0...v1.1.1) (2025-03-29)
+
+
+### Bug Fixes
+
+* start browser asny ([3efc919](https://github.com/jangraefen/open-repo.nvim/commit/3efc91982ad381310da4bfdb055abc4222f8b7f3))
+
 ## [1.1.0](https://github.com/jangraefen/open-repo.nvim/compare/v1.0.2...v1.1.0) (2025-03-29)
 
 
