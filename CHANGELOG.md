@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.0](https://github.com/jangraefen/open-repo.nvim/compare/v1.0.2...v1.1.0) (2025-03-29)
+
+
+### Features
+
+* add doc hint for wsl ([0ba301c](https://github.com/jangraefen/open-repo.nvim/commit/0ba301ccb563031c98b2ab974f15d909bc296662))
+
 ## [1.0.2](https://github.com/jangraefen/open-repo.nvim/compare/v1.0.1...v1.0.2) (2025-03-29)
 
 
