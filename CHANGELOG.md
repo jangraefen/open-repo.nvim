@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.1](https://github.com/jangraefen/open-repo.nvim/compare/v1.0.0...v1.0.1) (2025-03-29)
+
+
+### Bug Fixes
+
+* remove invalid parameter from command creation ([3613307](https://github.com/jangraefen/open-repo.nvim/commit/361330788d8318ef13e401105312b8e0138ce436))
+
 ## 1.0.0 (2025-03-28)
 
 
