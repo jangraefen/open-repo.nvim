@@ -31,23 +31,23 @@ Fields ~
 Default values:
 >lua
   OpenRepo.options = {
-      -- Prints useful logs about what event are triggered, and reasons actions are executed.
-      debug = false,
+    -- Prints useful logs about what event are triggered, and reasons actions are executed.
+    debug = false,
 
-      -- Command to open URLs in browser
-      browser_command = 'xdg-open',  -- Default for Linux, uses system's default browser
+    -- Command to open URLs in browser
+    browser_command = 'xdg-open', -- Default for Linux, uses system's default browser
 
-      -- Host mappings for custom GitHub/GitLab instances
-      -- Format: { host = "github|gitlab" }
-      host_mappings = {
-          -- Default instances
-          ["github.com"] = "github",
-          ["gitlab.com"] = "gitlab",
-          -- Example: Enterprise GitHub instance
-          -- ["github.company.com"] = "github",
-          -- Example: Self-hosted GitLab instance
-          -- ["gitlab.company.com"] = "gitlab",
-      },
+    -- Host mappings for custom GitHub/GitLab instances
+    -- Format: { host = "github|gitlab" }
+    host_mappings = {
+      -- Default instances
+      ['github.com'] = 'github',
+      ['gitlab.com'] = 'gitlab',
+      -- Example: Enterprise GitHub instance
+      -- ["github.company.com"] = "github",
+      -- Example: Self-hosted GitLab instance
+      -- ["gitlab.company.com"] = "gitlab",
+    },
   }
 
 <
