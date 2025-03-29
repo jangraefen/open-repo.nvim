@@ -18,7 +18,7 @@ bit easier and faster.
 - `:OpenRepoCR`: Open the change request for the current repository (Pull requests for GitHub, Merge Requests for GitLab).
 - `:OpenRepoCICD`: Open the CICD for the current repository (Actions for GitHub, Pipelines for GitLab).
 
-The current repository is determined by the currently active buffer or the current working directory. 
+The current repository is determined by the currently active buffer or the current working directory.
 
 ## 📋 Installation
 
@@ -39,15 +39,12 @@ Using [folke/lazy.nvim](https://github.com/folke/lazy.nvim) is recommended, but 
     { '<leader>gc', '<cmd>OpenRepoCR<CR>', desc = 'Open change request' },
     { '<leader>gb', '<cmd>OpenRepoCICD<CR>', desc = 'Open builds' }
   },
-  -- No setup is needed, but you can configure custom GitHub and GitLab mappings or customize the browser command.
-  setup = function()
-    require('open-repo').setup({
-      browser_command = 'xdg-open',
-      host_mappings = {
-          ["gitlab.mycompany.com"] = "gitlab",
-      },
-    })
-  end,
+  opts = {
+    browser_command = 'xdg-open',
+    host_mappings = {
+      ["gitlab.mycompany.com"] = "gitlab",
+    }
+  }
 }
 
 ```
