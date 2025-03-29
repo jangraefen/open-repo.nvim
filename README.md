@@ -53,3 +53,7 @@ Using [folke/lazy.nvim](https://github.com/folke/lazy.nvim) is recommended, but 
 ## ⌨ Contributing
 
 PRs and issues are always welcome. Make sure to provide as much context as possible when opening one.
+
+## 💰 Funding
+
+I do not need any money or support, but please support the Neovim project. They are doing an awesome job!
