@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.4](https://github.com/jangraefen/open-repo.nvim/compare/v1.2.3...v1.2.4) (2025-03-30)
+
+
+### Bug Fixes
+
+* relative path construction ([b626a05](https://github.com/jangraefen/open-repo.nvim/commit/b626a05ccbc42eed7d062d3e0be573d28c7a9fc4))
+
 ## [1.2.3](https://github.com/jangraefen/open-repo.nvim/compare/v1.2.2...v1.2.3) (2025-03-30)
 
 
