@@ -1,22 +1,5 @@
 ==============================================================================
 ------------------------------------------------------------------------------
-                                                             *OpenRepo.toggle()*
-                              `OpenRepo.toggle`()
-Toggle the plugin by calling the `enable`/`disable` methods respectively.
-
-------------------------------------------------------------------------------
-                                                             *OpenRepo.enable()*
-                           `OpenRepo.enable`({scope})
-Initializes the plugin, sets event listeners and internal state.
-
-------------------------------------------------------------------------------
-                                                            *OpenRepo.disable()*
-                              `OpenRepo.disable`()
-Disables the plugin, clear highlight groups and autocmds, closes side buffers and resets the internal state.
-
-
-==============================================================================
-------------------------------------------------------------------------------
                                                               *OpenRepo.options*
                                `OpenRepo.options`
 OpenRepo configuration with its default values.
@@ -66,11 +49,20 @@ Usage ~
 ==============================================================================
 ------------------------------------------------------------------------------
 Class ~
+{FileInfo}
+Fields ~
+{name} `(string)` The file name
+{line} `(number)` The line number
+
+------------------------------------------------------------------------------
+Class ~
 {RepoInfo}
 Fields ~
 {domain} `(string)` The domain of the git host (e.g., "github.com")
 {owner} `(string)` The repository owner or organization name
 {name} `(string)` The repository name
+{branch} `(string)` The branch name
+{file} `(FileInfo|nil)` The location within the active file, if available
 
 ------------------------------------------------------------------------------
 Class ~
@@ -79,6 +71,7 @@ Fields ~
 {repo} `(string)` The main repository URL
 {change_requests} `(string)` The URL for pull/merge requests
 {cicd} `(string)` The URL for CI/CD (GitHub Actions or GitLab Pipelines)
+{file} `(string)` The URL for the active file
 
 
  vim:tw=78:ts=8:noet:ft=help:norl:
