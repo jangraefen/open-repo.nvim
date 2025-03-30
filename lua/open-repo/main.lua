@@ -154,7 +154,9 @@ function main.open_url(scope, url_type)
 
   local url = urls[url_type]
   if not url then
-    log.error(scope, string.format("Invalid URL type: %s", url_type))
+    if not url_type == 'file' then
+      log.error(scope, string.format("Invalid URL type: %s", url_type))
+    end
     return false
   end
 
