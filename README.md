@@ -15,6 +15,7 @@ Instead of trying to poorly simulate the platform UI in NeoVim, this plugin just
 bit easier and faster.
 
 - `:OpenRepo`: Open the start page of the current repository.
+- `:OpenRepoFile`: Open the current file and line.
 - `:OpenRepoCR`: Open the change request for the current repository (Pull requests for GitHub, Merge Requests for GitLab).
 - `:OpenRepoCICD`: Open the CICD for the current repository (Actions for GitHub, Pipelines for GitLab).
 
@@ -30,12 +31,14 @@ Using [folke/lazy.nvim](https://github.com/folke/lazy.nvim) is recommended, but 
   -- If you want to trigger lazy loading on commands
   cmd = {
     'OpenRepo',
+    'OpenRepoFile',
     'OpenRepoCR',
     'OpenRepoCICD'
   },
   -- Some inspriration for keybinds
   keys = {
     { '<leader>gr', '<cmd>OpenRepo<CR>', desc = 'Open repository' },
+    { '<leader>gf', '<cmd>OpenRepoFile<CR>', desc = 'Open current file' },
     { '<leader>gc', '<cmd>OpenRepoCR<CR>', desc = 'Open change request' },
     { '<leader>gb', '<cmd>OpenRepoCICD<CR>', desc = 'Open builds' }
   },
