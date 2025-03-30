@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.0](https://github.com/jangraefen/open-repo.nvim/compare/v1.1.1...v1.2.0) (2025-03-30)
+
+
+### Features
+
+* add functionality to open active file URL in browser ([9fc572c](https://github.com/jangraefen/open-repo.nvim/commit/9fc572cf994aa510da6b2d9cf49e57c6381685c4))
+
 ## [1.1.1](https://github.com/jangraefen/open-repo.nvim/compare/v1.1.0...v1.1.1) (2025-03-29)
 
 
