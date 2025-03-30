@@ -53,6 +53,7 @@ Class ~
 Fields ~
 {name} `(string)` The file name
 {line} `(number)` The line number
+{path} `(string)` The relative path from repository root
 
 ------------------------------------------------------------------------------
 Class ~
