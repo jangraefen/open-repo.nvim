@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.1](https://github.com/jangraefen/open-repo.nvim/compare/v1.2.0...v1.2.1) (2025-03-30)
+
+
+### Bug Fixes
+
+* prevent error logging if no file is opened ([883657a](https://github.com/jangraefen/open-repo.nvim/commit/883657ad6734a04773bdbf2f4a0dde6444b5085f))
+
 ## [1.2.0](https://github.com/jangraefen/open-repo.nvim/compare/v1.1.1...v1.2.0) (2025-03-30)
 
 
