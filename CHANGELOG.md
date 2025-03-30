@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.2](https://github.com/jangraefen/open-repo.nvim/compare/v1.2.1...v1.2.2) (2025-03-30)
+
+
+### Bug Fixes
+
+* use correct command to extract branch name ([73597b5](https://github.com/jangraefen/open-repo.nvim/commit/73597b54bde916aef39dc567cb62ce5d4c0f7444))
+
 ## [1.2.1](https://github.com/jangraefen/open-repo.nvim/compare/v1.2.0...v1.2.1) (2025-03-30)
 
 
