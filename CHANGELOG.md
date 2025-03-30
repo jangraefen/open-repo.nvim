@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.3](https://github.com/jangraefen/open-repo.nvim/compare/v1.2.2...v1.2.3) (2025-03-30)
+
+
+### Bug Fixes
+
+* build path to current file correctly. ([a38798c](https://github.com/jangraefen/open-repo.nvim/commit/a38798c2066297a6e8ce49c3c4eadca18fcf8bf2))
+
 ## [1.2.2](https://github.com/jangraefen/open-repo.nvim/compare/v1.2.1...v1.2.2) (2025-03-30)
 
 
