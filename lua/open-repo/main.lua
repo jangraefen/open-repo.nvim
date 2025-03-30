@@ -41,10 +41,16 @@ function main.get_repo_url(scope)
   -- Change to the directory and get git remote URL
   local cmd = string.format('cd "%s" && git remote get-url origin', dir_to_check)
   local remote_url = vim.fn.system(cmd):gsub('[\n\r]', '')
-  local branch = vim.fn.system(cmd .. ' | grep -oP "refs/heads/\\K[^ ]+"'):gsub('[\n\r]', '')
 
   if vim.v.shell_error ~= 0 then
     log.error(scope, 'Failed to get git remote URL')
+    return nil
+  end
+
+  cmd = string.format('cd "%s" && git rev-parse --abbrev-ref HEAD', dir_to_check)
+  local branch = vim.fn.system(cmd):gsub('[\n\r]', '')
+  if vim.v.shell_error ~= 0 then
+    log.error(scope, 'Failed to get current branch name')
     return nil
   end
 
@@ -155,7 +161,7 @@ function main.open_url(scope, url_type)
   local url = urls[url_type]
   if not url then
     if not url_type == 'file' then
-      log.error(scope, string.format("Invalid URL type: %s", url_type))
+      log.error(scope, string.format('Invalid URL type: %s', url_type))
     end
     return false
   end
@@ -166,15 +172,15 @@ function main.open_url(scope, url_type)
   local job_id = vim.fn.jobstart(cmd, {
     on_exit = function(_, exit_code)
       if exit_code ~= 0 then
-        log.error(scope, string.format("Failed to open URL: %s (exit code: %d)", url, exit_code))
+        log.error(scope, string.format('Failed to open URL: %s (exit code: %d)', url, exit_code))
       else
-        log.debug(scope, string.format("Opened %s URL: %s", url_type, url))
+        log.debug(scope, string.format('Opened %s URL: %s', url_type, url))
       end
-    end
+    end,
   })
 
   if job_id <= 0 then
-    log.error(scope, string.format("Failed to start browser command for URL: %s", url))
+    log.error(scope, string.format('Failed to start browser command for URL: %s', url))
     return false
   end
 
