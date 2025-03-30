@@ -6,6 +6,7 @@ local main = {}
 ---@class FileInfo
 ---@field name string The file name
 ---@field line number The line number
+---@field path string The relative path from repository root
 
 ---@class RepoInfo
 ---@field domain string The domain of the git host (e.g., "github.com")
@@ -29,9 +30,15 @@ function main.get_repo_url(scope)
     dir_to_check = vim.fn.fnamemodify(current_file, ':h')
     log.debug(scope, 'Using file directory: ' .. dir_to_check)
 
+    -- Get relative path from git root
+    local git_root = vim.fn.fnamemodify(vim.fn.system('git rev-parse --show-toplevel'):gsub('[\n\r]', ''), ':p')
+    local full_path = vim.fn.fnamemodify(current_file, ':p')
+    local relative_path = full_path:sub(#git_root + 2)
+
     file_info = {
       name = vim.fn.expand '%:t',
       line = vim.fn.line 'v',
+      path = relative_path,
     }
   else
     dir_to_check = vim.fn.getcwd()
@@ -124,7 +131,7 @@ function main.construct_repo_urls(scope)
       cicd = base .. '/actions',
     }
     if repo_info.file then
-      urls.file = base .. '/blob/' .. repo_info.branch .. '/' .. repo_info.file.name .. '#L' .. repo_info.file.line
+      urls.file = base .. '/blob/' .. repo_info.branch .. '/' .. repo_info.file.path .. '#L' .. repo_info.file.line
     end
   elseif service_type == 'gitlab' then
     log.debug(scope, 'Constructed GitLab URLs')
@@ -134,7 +141,7 @@ function main.construct_repo_urls(scope)
       cicd = base .. '/-/pipelines',
     }
     if repo_info.file then
-      urls.file = base .. '/-/blob/' .. repo_info.branch .. '/' .. repo_info.file.name .. '#L' .. repo_info.file.line
+      urls.file = base .. '/-/blob/' .. repo_info.branch .. '/' .. repo_info.file.path .. '#L' .. repo_info.file.line
     end
   else
     log.error(scope, string.format('Unsupported service type: %s', service_type))
