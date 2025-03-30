@@ -33,7 +33,7 @@ function main.get_repo_url(scope)
     -- Get relative path from git root
     local git_root = vim.fn.fnamemodify(vim.fn.system('git rev-parse --show-toplevel'):gsub('[\n\r]', ''), ':p')
     local full_path = vim.fn.fnamemodify(current_file, ':p')
-    local relative_path = full_path:sub(#git_root + 2)
+    local relative_path = full_path:sub(#git_root + 1)
 
     file_info = {
       name = vim.fn.expand '%:t',
