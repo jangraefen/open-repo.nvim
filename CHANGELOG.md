@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.5](https://github.com/jangraefen/open-repo.nvim/compare/v1.2.4...v1.2.5) (2025-08-05)
+
+
+### Bug Fixes
+
+* openrepocicd command naming ([99e3381](https://github.com/jangraefen/open-repo.nvim/commit/99e33818231a785533b31dca43239bec61ec5414))
+
 ## [1.2.4](https://github.com/jangraefen/open-repo.nvim/compare/v1.2.3...v1.2.4) (2025-03-30)
 
 
