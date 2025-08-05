@@ -19,7 +19,7 @@ end, {
   nargs = 0,
 })
 
-vim.api.nvim_create_user_command('OpenCICD', function()
+vim.api.nvim_create_user_command('OpenRepoCICD', function()
   require('open-repo').open_cicd()
 end, {
   desc = 'Open the CI/CD URL in the configured browser',
