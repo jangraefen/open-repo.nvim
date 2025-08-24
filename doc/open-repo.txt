@@ -8,7 +8,7 @@ Class ~
 {OpenRepoConfig}
 Fields ~
 {debug} `(boolean)` Prints useful logs about what events are triggered, and reasons actions are executed
-{host_mappings} `(table<string, "github"|"gitlab">)` host mappings for custom GitHub/GitLab instances. Key is the domain name, value must be either "github" or "gitlab"
+{host_mappings} `(table<string, "github"|"gitlab"|"gitea">)` host mappings for custom GitHub, GitLab and Gitea instances. Key is the domain name, value must be either "github", "gitlab" or "gitea"
 {browser_command} `(string)` Command to open URLs in browser
 
 Default values:
@@ -71,7 +71,7 @@ Class ~
 Fields ~
 {repo} `(string)` The main repository URL
 {change_requests} `(string)` The URL for pull/merge requests
-{cicd} `(string)` The URL for CI/CD (GitHub Actions or GitLab Pipelines)
+{cicd} `(string)` The URL for CI/CD (GitHub/Gitea Actions or GitLab Pipelines)
 {file} `(string)` The URL for the active file
 
 
