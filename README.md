@@ -16,8 +16,8 @@ bit easier and faster.
 
 - `:OpenRepo`: Open the start page of the current repository.
 - `:OpenRepoFile`: Open the current file and line.
-- `:OpenRepoCR`: Open the change request for the current repository (Pull requests for GitHub, Merge Requests for GitLab).
-- `:OpenRepoCICD`: Open the CICD for the current repository (Actions for GitHub, Pipelines for GitLab).
+- `:OpenRepoCR`: Open the change request for the current repository (Pull requests for GitHub and Gitea, Merge Requests for GitLab).
+- `:OpenRepoCICD`: Open the CICD for the current repository (Actions for GitHub and Gitea, Pipelines for GitLab).
 
 The current repository is determined by the currently active buffer or the current working directory.
 

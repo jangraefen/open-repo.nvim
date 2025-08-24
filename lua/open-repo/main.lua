@@ -97,7 +97,7 @@ end
 ---@class RepoUrls
 ---@field repo string The main repository URL
 ---@field change_requests string The URL for pull/merge requests
----@field cicd string The URL for CI/CD (GitHub Actions or GitLab Pipelines)
+---@field cicd string The URL for CI/CD (GitHub/Gitea Actions or GitLab Pipelines)
 ---@field file string The URL for the active file
 
 -- Constructs various repository-related URLs based on the host
@@ -142,6 +142,16 @@ function main.construct_repo_urls(scope)
     }
     if repo_info.file then
       urls.file = base .. '/-/blob/' .. repo_info.branch .. '/' .. repo_info.file.path .. '#L' .. repo_info.file.line
+    end
+  elseif service_type == 'gitea' then
+    log.debug(scope, 'Constructed Gitea URLs')
+    urls = {
+      repo = base,
+      change_requests = base .. '/pulls',
+      cicd = base .. '/actions',
+    }
+    if repo_info.file then
+      urls.file = base .. '/src/branch/' .. repo_info.branch .. '/' .. repo_info.file.path .. '#L' .. repo_info.file.line
     end
   else
     log.error(scope, string.format('Unsupported service type: %s', service_type))
