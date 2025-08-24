@@ -6,7 +6,7 @@ local OpenRepo = {}
 ---
 ---@class OpenRepoConfig
 ---@field debug boolean Prints useful logs about what events are triggered, and reasons actions are executed
----@field host_mappings table<string, "github"|"gitlab"> host mappings for custom GitHub/GitLab instances. Key is the domain name, value must be either "github" or "gitlab"
+---@field host_mappings table<string, "github"|"gitlab"|"gitea"> host mappings for custom GitHub, GitLab and Gitea instances. Key is the domain name, value must be either "github", "gitlab" or "gitea"
 ---@field browser_command string Command to open URLs in browser
 ---
 --- Default values:
@@ -52,8 +52,8 @@ function OpenRepo.defaults(options)
     for host, platform in pairs(OpenRepo.options.host_mappings) do
       assert(type(host) == 'string', 'Domain name must be a string')
       assert(
-        platform == 'github' or platform == 'gitlab',
-        string.format("Platform for host '%s' must be either 'github' or 'gitlab'", host)
+        platform == 'github' or platform == 'gitlab' or platform == 'gitea',
+        string.format("Platform for host '%s' must be either 'github', 'gitlab' or 'gitea'", host)
       )
     end
   end
