@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.0](https://github.com/jangraefen/open-repo.nvim/compare/v1.2.5...v1.3.0) (2025-08-24)
+
+
+### Features
+
+* support for gitea ([80ae5ce](https://github.com/jangraefen/open-repo.nvim/commit/80ae5ced3ca93e6816e9cf750cfe57bf11f11b66))
+
 ## [1.2.5](https://github.com/jangraefen/open-repo.nvim/compare/v1.2.4...v1.2.5) (2025-08-05)
 
 
